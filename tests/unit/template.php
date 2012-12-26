@@ -5,7 +5,7 @@ require_once __DIR__ . '/../init.php';
 use CMSx\Template;
 use CMSx\Template\Exception;
 
-class ExceptionsTest extends PHPUnit_Framework_TestCase
+class TemplateTest extends PHPUnit_Framework_TestCase
 {
   protected $path;
 

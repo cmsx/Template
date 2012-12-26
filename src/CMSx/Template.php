@@ -50,14 +50,11 @@ class Template extends Container
 
     try {
       if ($this->cur_template) {
-        if (!self::CheckTemplateExists($this->cur_template)) {
-          Exception::NotExists($this->cur_template);
-        }
         ob_start();
         if ($this->vars) {
           extract($this->vars, EXTR_OVERWRITE);
         }
-        include self::GetPathToTemplate($this->cur_template);
+        include $this->getTemplatePath($this->cur_template);
 
         return ob_get_clean();
       } else {
@@ -147,5 +144,15 @@ class Template extends Container
   public static function GetPathToTemplate($tmpl)
   {
     return self::GetPath() . DIRECTORY_SEPARATOR . ltrim($tmpl, DIRECTORY_SEPARATOR);
+  }
+
+  /** Проверка существования шаблона и получние полного пути */
+  protected function getTemplatePath($template)
+  {
+    if (!self::CheckTemplateExists($template)) {
+      Exception::NotExists($template);
+    }
+
+    return self::GetPathToTemplate($template);
   }
 }
