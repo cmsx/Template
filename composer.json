@@ -1,0 +1,23 @@
+{
+    "name": "cmsx/template",
+    "version" : "0.1",
+    "type": "library",
+    "description": "CMSx template component",
+    "homepage": "http://cmsx.ru",
+    "require": {
+        "php": ">=5.3.0",
+        "cmsx/container":"dev-master"
+    },
+    "repositories":[
+        {
+            "type":"git",
+            "url":"http://github.com/cmsx/Container"
+        }
+    ],
+    "autoload":{
+        "psr-0":{
+            "CMSx":"src"
+        }
+    },
+    "minimum-stability": "dev"
+}
