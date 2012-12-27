@@ -1,23 +1,25 @@
 {
-    "name": "cmsx/template",
-    "version" : "0.1",
-    "type": "library",
-    "description": "CMSx template component",
-    "homepage": "http://cmsx.ru",
-    "require": {
-        "php": ">=5.3.0",
-        "cmsx/container":"dev-master"
-    },
-    "repositories":[
+    "name":"cmsx/template",
+    "version":"0.1",
+    "type":"library",
+    "description":"CMSx template component",
+    "homepage":"http://cmsx.ru",
+    "license":"MIT",
+    "authors":[
         {
-            "type":"git",
-            "url":"http://github.com/cmsx/Container"
+            "name":"Igor Osharin",
+            "email":"igor@osharin.ru",
+            "homepage":"http://igor.osharin.ru"
         }
     ],
+    "require":{
+        "php":">=5.3.0",
+        "cmsx/container":"dev-master"
+    },
     "autoload":{
         "psr-0":{
             "CMSx":"src"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability":"dev"
 }
