@@ -27,7 +27,7 @@ class Template extends Container
       $this->setTemplate($template);
     }
     if ($vars) {
-      $this->setVars($vars);
+      $this->fromArray($vars);
     }
   }
 
@@ -83,20 +83,6 @@ class Template extends Container
   public function getTemplate()
   {
     return $this->template;
-  }
-
-  /** Все переменные шаблона */
-  public function setVars(array $vars)
-  {
-    $this->vars = $vars;
-
-    return $this;
-  }
-
-  /** Все переменные шаблона */
-  public function getVars()
-  {
-    return $this->vars;
   }
 
   /**

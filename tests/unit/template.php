@@ -38,7 +38,7 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 
     $t = new Template;
     $t->setTemplate('hello.php');
-    $t->setVars($var);
+    $t->fromArray($var);
     $this->assertEquals($exp, $t->render(), 'Настройки через сеттеры');
 
     $t = new Template('hello.php', $var);
@@ -48,7 +48,7 @@ class TemplateTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($t->render(), (string)$t, 'Приведение к строке');
 
     $t = new Template;
-    $t->setVars($var);
+    $t->fromArray($var);
     $this->assertEquals($exp, $t->render('hello.php'), 'Выбор шаблона при рендеринге');
   }
 
