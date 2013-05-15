@@ -72,6 +72,19 @@ class TemplateTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($exp, (string)new Template, 'Шаблон не выбран');
   }
 
+  function testEscaping()
+  {
+    $t = new Template('hello.php', array('hello' => '<h1>Some HTML</h1>'));
+
+    $exp = 'Hello, &lt;h1&gt;Some HTML&lt;/h1&gt;! Yeah, <h1>Some HTML</h1>!';
+    $this->assertEquals($exp, (string)$t, 'Экранирование включено');
+
+    $t->enableEscaping(false);
+
+    $exp = 'Hello, <h1>Some HTML</h1>! Yeah, <h1>Some HTML</h1>!';
+    $this->assertEquals($exp, (string)$t, 'Экранирование выключено');
+  }
+
   protected function setUp()
   {
     $this->path = realpath(__DIR__ . '/../tmpl');

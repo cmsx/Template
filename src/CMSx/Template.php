@@ -13,6 +13,8 @@ class Template extends Container
   protected $cur_template;
   /** @var \Exception */
   protected $exception;
+  /** Нужно ли экранировать Спецсимволы */
+  protected $escape = true;
 
   /** Режим отладки */
   protected static $debug;
@@ -21,13 +23,21 @@ class Template extends Container
   /** Кеш проверки существования шаблонов */
   protected static $tmpl_exist_arr = array();
 
-  function __construct($template = null, array $vars = null)
+  /**
+   * @param null  $template Путь к шаблону
+   * @param array $vars Переменные в шаблоне
+   * @param bool  $escape Нужно ли экранировать переменные, по-умолчанию - да
+   */
+  function __construct($template = null, array $vars = null, $escape = null)
   {
     if ($template) {
       $this->setTemplate($template);
     }
     if ($vars) {
       $this->fromArray($vars);
+    }
+    if (!is_null($escape)) {
+      $this->enableEscaping($escape);
     }
   }
 
@@ -51,9 +61,8 @@ class Template extends Container
     try {
       if ($this->cur_template) {
         ob_start();
-        if ($this->vars) {
-          extract($this->vars, EXTR_OVERWRITE);
-        }
+        extract($this->getVars(), EXTR_OVERWRITE);
+
         include $this->getTemplatePath($this->cur_template);
 
         return ob_get_clean();
@@ -94,6 +103,14 @@ class Template extends Container
     return $this->exception ? : false;
   }
 
+  /** Нужно ли экранировать вывод переменных в шаблоне */
+  public function enableEscaping($on = true)
+  {
+    $this->escape = $on;
+
+    return $this;
+  }
+
   /** Путь к папке с шаблонами. Правый слеш отсекается */
   public static function SetPath($dir)
   {
@@ -130,6 +147,20 @@ class Template extends Container
   public static function GetPathToTemplate($tmpl)
   {
     return self::GetPath() . DIRECTORY_SEPARATOR . ltrim($tmpl, DIRECTORY_SEPARATOR);
+  }
+
+  /** Получение переменных для экспорта в шаблон */
+  protected function getVars()
+  {
+    if (!$v = $this->vars) {
+      return array();
+    }
+
+    if ($this->escape) {
+      array_walk($v, function(&$var){if (is_string($var)) {$var = htmlspecialchars($var);}});
+    }
+
+    return $v;
   }
 
   /** Проверка существования шаблона и получние полного пути */
